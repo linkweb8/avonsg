@@ -7,6 +7,8 @@ ENV GOLANG_VERSION 1.10
 # no-pic.patch: https://golang.org/issue/14851 (Go 1.8 & 1.7)
 COPY *.patch /go-alpine-patches/
 
+ENV GOPATH /go
+
 RUN set -eux; \
 	apk add --no-cache --virtual .build-deps \
 		bash \
@@ -51,10 +53,8 @@ RUN set -eux; \
 	export PATH="/usr/local/go/bin:$PATH"; \
 	go version; \
 	\
-	export \
-		GOPATH="/go" \
-		PATH="$GOPATH/bin:$PATH" \
-	; \
+	export PATH="$GOPATH/bin:$PATH"; \
+	\
 	mkdir -p "$GOPATH/src" "$GOPATH/bin"; \
 	chmod -R 777 "$GOPATH"; \
 	\
@@ -62,9 +62,11 @@ RUN set -eux; \
     go get -d github.com/devcodewak/avonsg_openshift/cmd; \
     go build -ldflags="-s -w" -o /go/bin/web github.com/devcodewak/avonsg_openshift/cmd; \
     rm -rf /go/src/github.com/; \
-    rm -rf /usr/local/go/
+    rm -rf /usr/local/go/; \
+	apk del git; \
+	ls -la /go/bin/
 
-ENV GOPATH /go
+
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 # RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 
