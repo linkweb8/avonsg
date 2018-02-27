@@ -53,22 +53,24 @@ RUN set -eux; \
 	export PATH="/usr/local/go/bin:$PATH"; \
 	go version; \
 	\
-	export PATH="$GOPATH/bin:$PATH"; \
 	\
 	mkdir -p "$GOPATH/src" "$GOPATH/bin"; \
 	chmod -R 777 "$GOPATH"; \
 	\
+	\
 	apk add --update git; \
-    go get -d github.com/devcodewak/avonsg_openshift/cmd; \
-    go build -ldflags="-s -w" -o /go/bin/web github.com/devcodewak/avonsg_openshift/cmd; \
-    rm -rf /go/src/github.com/; \
-    rm -rf /usr/local/go/; \
+	go get -d github.com/devcodewak/avonsg_openshift/cmd; \
+	go build -ldflags="-s -w" -o /go/bin/web github.com/devcodewak/avonsg_openshift/cmd; \
+	rm -rf /go/src/github.com/; \
+	rm -rf /usr/local/go/; \
 	apk del git; \
-	ls -la /go/bin/
+	\
+	\
+	export PATH="$GOPATH/bin:$PATH"; \
+	/go/bin/web version
 
 
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
-# RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 
 WORKDIR $GOPATH
 
