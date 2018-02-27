@@ -1,6 +1,6 @@
 FROM alpine:3.7
 
-RUN apk add --no-cache ca-certificates
+# RUN apk add --no-cache ca-certificates
 
 ENV GOLANG_VERSION 1.10
 
@@ -10,6 +10,7 @@ COPY *.patch /go-alpine-patches/
 ENV GOPATH /go
 
 RUN set -eux; \
+	apk add --no-cache ca-certificates; \
 	apk add --no-cache --virtual .build-deps \
 		bash \
 		gcc \
@@ -67,7 +68,7 @@ RUN set -eux; \
 	\
 	\
 	export PATH="$GOPATH/bin:$PATH"; \
-	/go/bin/web version
+	/go/bin/web -version
 
 
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
