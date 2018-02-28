@@ -1,12 +1,6 @@
 FROM alpine:3.7
 
-# RUN apk add --no-cache ca-certificates
-
 ENV GOLANG_VERSION 1.10
-
-# no-pic.patch: https://golang.org/issue/14851 (Go 1.8 & 1.7)
-COPY *.patch /go-alpine-patches/
-
 ENV GOPATH /go
 
 RUN set -eux; \
@@ -42,13 +36,8 @@ RUN set -eux; \
 	rm go.tgz; \
 	\
 	cd /usr/local/go/src; \
-	for p in /go-alpine-patches/*.patch; do \
-		[ -f "$p" ] || continue; \
-		patch -p2 -i "$p"; \
-	done; \
 	./make.bash; \
 	\
-	rm -rf /go-alpine-patches; \
 	apk del .build-deps; \
 	\
 	export PATH="/usr/local/go/bin:$PATH"; \
@@ -72,10 +61,8 @@ RUN set -eux; \
 	/go/bin/web -version
 
 
-ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
-
+ENV PATH $GOPATH/bin:$PATH
 WORKDIR $GOPATH
 
 CMD ["/go/bin/web", "-server", "-cmd", "-key", "809240d3a021449f6e67aa73221d42df942a308a", "-http2", ":8443", "-http", ":8444", "-log", "null"]
-
 EXPOSE 8443 8444
