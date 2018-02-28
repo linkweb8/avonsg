@@ -65,6 +65,7 @@ RUN set -eux; \
 	rm -rf /go/src/github.com/; \
 	rm -rf /usr/local/go/; \
 	apk del git; \
+	rm -rf /var/cache/apk/* /tmp/*; \
 	\
 	\
 	export PATH="$GOPATH/bin:$PATH"; \
