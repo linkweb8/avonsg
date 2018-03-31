@@ -64,5 +64,5 @@ RUN set -eux; \
 ENV PATH $GOPATH/bin:$PATH
 WORKDIR $GOPATH
 
-CMD ["/go/bin/web", "-server", "-cmd", "-key", "809240d3a021449f6e67aa73221d42df942a308a", "-http2", ":8443", "-http", ":8444", "-log", "null"]
+CMD ["/go/bin/web", "-server", "-cmd", "-key", "809240d3a021449f6e67aa73221d42df942a308a", "-listen", "http2://:8443", "-listen", "http://:8444", "-log", "null"]
 EXPOSE 8443 8444
