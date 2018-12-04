@@ -1,6 +1,6 @@
 FROM alpine:3.7
 
-ENV GOLANG_VERSION 1.10
+ENV GOLANG_VERSION 1.11.2
 ENV GOPATH /go
 
 RUN set -eux; \
