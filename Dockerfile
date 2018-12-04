@@ -1,6 +1,7 @@
 FROM alpine:3.7
 
 ENV GOLANG_VERSION 1.11.2
+ENV GOLANG_SHA256 042fba357210816160341f1002440550e952eb12678f7c9e7e9d389437942550
 ENV GOPATH /go
 
 RUN set -eux; \
@@ -31,7 +32,7 @@ RUN set -eux; \
 	esac; \
 	\
 	wget -O go.tgz "https://golang.org/dl/go$GOLANG_VERSION.src.tar.gz"; \
-	echo 'f3de49289405fda5fd1483a8fe6bd2fa5469e005fd567df64485c4fa000c7f24 *go.tgz' | sha256sum -c -; \
+	echo '$GOLANG_SHA256 *go.tgz' | sha256sum -c -; \
 	tar -C /usr/local -xzf go.tgz; \
 	rm go.tgz; \
 	\
