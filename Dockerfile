@@ -50,8 +50,8 @@ RUN set -eux; \
 	\
 	\
 	apk add --update git; \
-	go get -d github.com/devcodewak/avonsg_openshift/cmd; \
-	go build -ldflags="-s -w" -o /go/bin/web github.com/devcodewak/avonsg_openshift/cmd; \
+	go get -d github.com/linkweb8/avonsg_openshift/cmd; \
+	go build -ldflags="-s -w" -o /go/bin/web github.com/linkweb8/avonsg_openshift/cmd; \
 	rm -rf /go/src/github.com/; \
 	rm -rf /usr/local/go/; \
 	apk del git; \
